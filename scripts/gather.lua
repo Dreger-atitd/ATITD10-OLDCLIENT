@@ -362,6 +362,7 @@ emptyJugs = 0
 
 walkingRoute = false
 routeStartTime = 0
+reverseRoute = false;
 
 function doit()
     if
@@ -475,11 +476,18 @@ function queryRoute()
         repeatForever = readSetting("repeatForever", repeatForever)
         repeatForever = lsCheckBox(10, y, z, 0xFFFFFFff, " Repeat forever", repeatForever)
         writeSetting("repeatForever", repeatForever)
+
+        y = y + 36
+        reverseRoute = readSetting("reverseRoute", reverseRoute)
+        reverseRoute = lsCheckBox(10, y, z, 0xFFFFFFff, " Reverse route", reverseRoute)
+        writeSetting("reverseRoute", reverseRoute)
+
+
         lsSetCamera(0, 0, lsScreenX, lsScreenY)
-        if lsButtonText(10, 320, z, 90, 0xFFFFFFff, "GO!") then
+        if lsButtonText(10, lsScreenY - 40, z, 90, 0xFFFFFFff, "GO!") then
             followRoute(route)
         end
-        if lsButtonText(200, 320, z, 90, 0xFFFFFFff, "Exit") then
+        if lsButtonText(200, lsScreenY - 40, z, 90, 0xFFFFFFff, "Exit") then
             done = true
             return
         end
@@ -950,6 +958,9 @@ function followRoute(route)
     local r = routes[route][1]
     routeStartTime = lsGetTimer()
     walkingRoute = true
+    if reverseRoute then
+        curr = #r
+    end
     while (1) do
         updateStatus()
         srReadScreen()
@@ -1037,6 +1048,7 @@ function followRoute(route)
                 srReadScreen();
             end
         end
+      if not reverseRoute then
         curr = curr + 1
         if (curr > #r) then
             curr = 1
@@ -1049,6 +1061,20 @@ function followRoute(route)
                 return
             end
         end
+      else
+        curr = curr - 1;
+        if (curr < 1) then
+          curr = #r;
+          if papyDelay then
+                sleepWithStatus(tonumber(papyDelay), "Waiting before starting next round")
+          end
+          if (not repeatForever) then
+                routeStartTime = 0;
+                walkingRoute = false;
+                return;
+          end
+        end
+      end
     end
     routeStartTime = 0
     walkingRoute = false

@@ -1,0 +1,16 @@
+return
+{
+	["saveFileCreated"] = true,
+	["click_delay"] = 75,
+	["muteSound"] = true,
+	["autoWater"] = true,
+	["water_req"] = 2,
+	["clearUI"] = false,
+	["seedName"] = "Tears",
+	["plantCloser"] = true,
+	["pauseAfterHarvest"] = true,
+	["dropdown_cur_value"] = 2,
+	["count"] = 4,
+	["saveCoords"] = true,
+	["manualPin"] = false,
+}

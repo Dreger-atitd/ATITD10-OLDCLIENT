@@ -23,6 +23,7 @@ function doit()
 
   while (true) do
     checkBreak();
+    
     closePopUp();
     refreshWindows();
     repairBoards(); -- Repairs Wood Planes
@@ -137,6 +138,9 @@ end
 local repairCycle = true;
 local planeCycleCount = 0;
 function doPlaneCircle()
+  lsSleep(30);
+    srReadScreen();
+    clickAllText("Knap a Slate Blade");
   if (runPlaneCircle) then
     closePopUp()
     local planeOffset = 175;

@@ -45,7 +45,7 @@ function doit()
   windowSize = srGetWindowSize();
   local ctr = 0;
   local xyScreenSize = srGetWindowSize();
-
+  --[[ THIS HAS BEEN TEMPORARILY COMMENTED OUT UNTIL THE OCR FUNCTIONALITY IS FIXED FOR T10
   while true do
     if ((ctr % 10) == 0) then
       srReadScreen();
@@ -56,7 +56,7 @@ function doit()
         clickAllText("Pick up the");
       end
     end
-
+  ]]--
 
     if (lsControlHeld()) then
       autorun = not autorun;

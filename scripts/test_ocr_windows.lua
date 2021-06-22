@@ -18,6 +18,9 @@ end
 
 
 function findAllTextRegions()
+  if not nil then
+    return findAllWindows();
+  end
   local regions = {};
   local pos = srFindFirstTextRegion();
   if not pos then
@@ -34,8 +37,12 @@ function findAllTextRegions()
 end
 
 function showDebugInRange(name, screenx, screeny, imgw, imgh, x, y, z, w, h)
-  srStripRegion(screenx, screeny, imgw, imgh);
+  resetWindowColorRanges();
+  srReadScreen();
+  lsPrintln("hit1");
+  srStripScreen();
   srMakeImage(name, screenx, screeny, imgw, imgh, true);
+  lsPrintln("hit2");
   local scale = 1;
   local border = 1;
   for stest=2,10 do
@@ -60,22 +67,22 @@ function findStuff()
 
   -- Fetch border test before possibly calling srStripRegion
   local pos = getMousePos();
-  local borders = newGetWindowBorders(pos[0], pos[1], 0);
+  local borders = newGetWindowBorders(pos[0], pos[1]);
 
   local regions = findAllTextRegions();
   if regions and windowIndex > #regions then
     windowIndex = 1;
   end
   if regions and #regions > 0 then
-    local current = regions[windowIndex];
-    srStripRegion(current[0], current[1], current[2], current[3]);
-    showDebugInRange("current-region",
-      current[0], current[1], current[2], current[3],
-      5, 5, 2, lsScreenX - 10, lsScreenY / 2 - 10);
     if lsButtonText(lsScreenX - 110, 0, 10, 100,
         0xFFFFFFff, "Region " .. windowIndex .. "/" .. #regions ) then
       windowIndex = windowIndex + 1;
     end
+    local current = regions[windowIndex];
+    showDebugInRange("current-region" .. windowIndex,
+      current[0], current[1], current[2], current[3],
+      5, 5, 2, lsScreenX - 10, lsScreenY / 2 - 10);
+    
   else
     lsPrint(0, 0, 10, 1, 1, 0xFF8080ff, "No text regions found")
   end
@@ -118,9 +125,9 @@ function findStuff()
   if not found then
     y = y + lsPrintWrapped(20, y, 10, lsScreenX - 20, 0.75, 0.75, color, "No valid window border found under cursor");
   else
-    -- srStripRegion(borders[0], borders[1], borders[2] - borders[0] + 1, borders[3] - borders[1] + 1);
+    --srStripRegion(borders[0], borders[1], borders[2] - borders[0] , borders[3] - borders[1] );
     showDebugInRange("current-window",
-      borders[0], borders[1], borders[2] - borders[0] + 1, borders[3] - borders[1] + 1,
+      borders[0], borders[1], borders[2] - borders[0] , borders[3] - borders[1] ,
       5, y, 2, lsScreenX - 10, lsScreenY - (y + 20) - 2);
     y = y + 20;
   end

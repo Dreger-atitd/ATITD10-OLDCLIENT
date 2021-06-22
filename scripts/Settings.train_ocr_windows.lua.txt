@@ -1,0 +1,9 @@
+return
+{
+	["dyn_offset_key"] = 1159,
+	["dyn_offset_keyz"] = 881,
+	["ocr_data"] = "1,12,16,?",
+	["dynamicKey"] = 100168,
+	["offsetX"] = 195,
+	["offsetY"] = 115,
+}

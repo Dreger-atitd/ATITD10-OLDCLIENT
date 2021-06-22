@@ -108,6 +108,7 @@ function findAllImagesInRange(image_name, startX, startY, width, height, tol)
   local y = startY;
   local buttons = {};
   while 1 do
+    --lsPrintln("y: " ..  y);
     local pos = srFindImageInRange(image_name, startX, y, width, endY-y, tol);
     if not pos then
       break;
@@ -150,7 +151,7 @@ function findImageInWindow(image_name, x, y, tol)
     tol = 5000;
   end
   local result = nil;
-  local range = getWindowBorders(x, y);
+  local range = newGetWindowBorders(x, y);
   if range then
     result = srFindImageInRange(image_name, range.x, range.y,
                                 range.width, range.height, tol);
@@ -234,7 +235,51 @@ function findAllText(text, window, flag, sizemod)
   return results;
 end
 
+
 function findAllWindows()
+  local windows = {};
+  local screenSize = srGetWindowSize();
+  srReadScreen();
+  local allTLWindowCorners = findAllImages("TLWindowCorner.png",nil, 500);
+  --lsPrintln("allTLWindowCorners: " .. inspectit.inspect(allTLWindowCorners));
+  if allTLWindowCorners then
+   for i = 1, #allTLWindowCorners do
+    local contained = false;
+    --for w = 1, #windows do
+    --    if allTLWindowCorners[i][0] > windows[w][0] and
+    --       allTLWindowCorners[i][1] > windows[w][1] and
+    --       allTLWindowCorners[i][0] < windows[w][2] and
+    --       allTLWindowCorners[i][1] < windows[w][3] then
+    --        contained = true;
+    --        break;
+    --    end
+    --end
+    if not contained then
+        local borders = newGetWindowBorders(allTLWindowCorners[i][0]+3, allTLWindowCorners[i][1]+3);
+        if borders then
+          local region = {};
+          region = { [0] = borders[0], [1] = borders[1], [2] = borders[2], [3] = borders[3], 
+                  x = borders[0], y = borders[1], right = borders[2], bottom = borders[3],
+                  top = borders[1], left = borders[0], width = borders[2] - borders[0],
+                  height = borders[3] - borders[1] };
+          
+          --for w = 1, #windows do
+          -- if windows[w][0] > region[0] and
+          --   windows[w][1] > region[1] and
+          --   windows[w][0] < region[2] and
+          --   windows[w][1] < region[3] then
+          --     windows[w] = nil;
+          -- end
+          --end
+          table.insert(windows, region);
+        end
+    end
+   end
+  end
+  return windows;
+end
+
+function oldfindAllWindows()
   local windows = {};
   local current = srFindFirstTextRegion();
   while current do
@@ -469,7 +514,7 @@ function findChatRegionReplacement()
     pos = findChatRegionSub();
     sleepWithStatus(100,"Cound not find \'Main\' Chat Tab...", nil, 0.7);
   end
-  lsPrintln(inspectit.inspect(pos));
+  --lsPrintln(inspectit.inspect(pos));
   if pos then
     local borders = getChatWindowBorders(pos[0], pos[1]+20);
     while not borders do
@@ -516,7 +561,7 @@ function findClockRegion()
  
   if neutral then
     faction = "Neutral";
-    --srSetWindowInvertColorRange(0x8E5C34, 0xE4D7CC);
+    srSetWindowInvertColorRange(0x8E5C34, 0xE4D7CC);
     clockUpperLeftX = neutral[0];
     clockUpperLeftY = neutral[1];
 

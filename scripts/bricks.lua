@@ -8,6 +8,7 @@ dofile("settings.inc");
 brickList = {"Bricks", "Firebricks"};
 rackList = {};
 brickType = "b";
+brick = 1;
 function doit()
   promptParameters();
   askForWindow("You know the routine, hit SHIFT over the ATiTD window.");
@@ -53,12 +54,12 @@ function promptParameters()
     lsSetCamera(0,0,lsScreenX*scale,lsScreenY*scale);
 
     lsPrint(10, y, 0, scale, scale, 0xd0d0d0ff, "Brick type:");
-    brick = lsDropdown("Brick", 120, y, 0, 180, blade, brickList);
+    brick = lsDropdown("brick", 120, y, 0, 180, brick, brickList);
 
     if brick == 1 then
         brickType = "b"
     elseif brick == 2 then
-        bladeName = "f"
+        brickType = "f"
     end
 
 

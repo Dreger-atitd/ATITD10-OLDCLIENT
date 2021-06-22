@@ -55,9 +55,10 @@ end
 
 function findOvens()
   local result = findAllImages("ThisIs.png");
+  lsPrintln(inspectit.inspect(result));
   for i=1,#result do
     local corner = findImageInWindow("charcoal/mm-corner.png",
-                     result[i][0], result[i][1], 100);
+                     result[i][0], result[i][1], 500);
     if not corner then
       error("Failed to find corner of cc window.");
     end

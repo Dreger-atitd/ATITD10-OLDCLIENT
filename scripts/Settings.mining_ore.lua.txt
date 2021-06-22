@@ -1,0 +1,11 @@
+return
+{
+	["clickDelay"] = 125,
+	["dropdown_ore_cur_value"] = 6,
+	["extraStones"] = true,
+	["dropdown_cur_value_key"] = 2,
+	["manualSets"] = true,
+	["writeLogFile"] = false,
+	["autoWorkMine"] = true,
+	["noMouseMove"] = false,
+}

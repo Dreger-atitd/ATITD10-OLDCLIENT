@@ -1,0 +1,4 @@
+return
+{
+	["dropdown_resource_value"] = 2,
+}

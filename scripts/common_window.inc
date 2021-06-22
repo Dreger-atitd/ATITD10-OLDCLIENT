@@ -133,16 +133,21 @@ function getChatWindowBorders(sourceX, sourceY)
     bounds[2] = brWinCorner[0]+brcWidth-(brcWidth * .5);
     bounds[1] = tlWinCorner[1]+tlcHeight-(tlcHeight * .5);
     bounds[3] = brWinCorner[1]+brcHeight-(brcHeight * .5);
-
-    return bounds;
+    local region = {};
+          region = { [0] = borders[0], [1] = borders[1], [2] = borders[2], [3] = borders[3], 
+                  x = borders[0], y = borders[1], right = borders[2], bottom = borders[3],
+                  top = borders[1], left = borders[0], width = borders[2] - borders[0],
+                  height = borders[3] - borders[1] };
+    lsPrintln(inspectit.inspect(region));
+    return region;
 end
 
 
 
 function newGetWindowBorders(sourceX, sourceY)
-    if nil then
-        return srGetWindowBorders(sourceX, sourceY);
-    end
+    --if nil then
+    --    return srGetWindowBorders(sourceX, sourceY);
+    --end
     local screen = srGetWindowSize();
     local nearestImage = {};
     local nearestDistance = 999999999;
@@ -155,7 +160,7 @@ function newGetWindowBorders(sourceX, sourceY)
     local firstY = sourceY - brcHeight;
     if firstX < 0 then firstX = 0; end;
     if firstY < 0 then firstY = 0; end;
-    imagesInRange = findAllImagesInRange("BRWindowCorner.png", firstX, firstY, screen[0]-firstX, screen[1]-firstY, 800);
+    imagesInRange = findAllImagesInRange("BRWindowCorner.png", firstX, firstY, screen[0]-firstX, screen[1]-firstY, 100);
 
     if not imagesInRange then return nil; end;
     --lsPrintln("Images in range #1");
@@ -172,7 +177,7 @@ function newGetWindowBorders(sourceX, sourceY)
     --lsPrintln("Past not BRCorner2");
     --lsPrintln(inspectit.inspect(brWinCorner));
     nearestDistance = 999999999;
-    local imagesInRange = findAllImagesInRange("TLWindowCorner.png", 0, 0, brWinCorner[0]+brcWidth, brWinCorner[1]+brcHeight, 800);
+    local imagesInRange = findAllImagesInRange("TLWindowCorner.png", 0, 0, brWinCorner[0]+brcWidth, brWinCorner[1]+brcHeight, 100);
     if not imagesInRange then return false; end;
     --lsPrintln("Images in range #2");
     for i = 1, #imagesInRange do
@@ -198,8 +203,14 @@ function newGetWindowBorders(sourceX, sourceY)
     bounds[2] = brWinCorner[0]+brcWidth-1;
     bounds[1] = tlWinCorner[1]+1;
     bounds[3] = brWinCorner[1]+brcHeight-1;
+    local region = {};
+          region = { [0] = bounds[0], [1] = bounds[1], [2] = bounds[2], [3] = bounds[3], 
+                  x = bounds[0], y = bounds[1], right = bounds[2], bottom = bounds[3],
+                  top = bounds[1], left = bounds[0], width = bounds[2] - bounds[0],
+                  height = bounds[3] - bounds[1] };
+    lsPrintln(inspectit.inspect(region));
 
-    return bounds;
+    return region;
 end
 
 function getTLWindowCorner()--sourceX, sourceY)

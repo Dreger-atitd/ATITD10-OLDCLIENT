@@ -506,7 +506,7 @@ function doit()
     local toAdd = ccamount - curCC;
     if t and toAdd > 0 then
       clickText(findText("Fill this ", win[i]));
-      waitForText("Add how much Charcoal?", nil, "Waiting for Charcoal message");
+      waitForImage("addHowMuch.png", nil, "Waiting for Charcoal message");
       srKeyEvent(string.format("%d\n", toAdd));
       waitForNoText("Add how much Charcoal?");
     end
@@ -553,8 +553,12 @@ function doit()
     local windows = findAllText("is lit", nil, REGION);
     for i=1, #windows do
       local charcoalText = findText("in the chamber", windows[i]);
+      charcoalText = string.sub(charcoalText[2],10);
+      charcoalText = string.sub(charcoalText, 1, -25);
+      charcoalText = charcoalText:gsub("%s+", "")
+      lsPrintln("CC: " .. charcoalText);
       if charcoalText then
-        local cc = tonumber(string.match(charcoalText[2], "(%d+) Charcoal in the chamber"));
+        local cc = tonumber(charcoalText);
         if cc and cc <= 10 then
           t = findText("Fill this ", windows[i]);
           clickText(t);

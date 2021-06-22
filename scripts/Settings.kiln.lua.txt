@@ -1,0 +1,6 @@
+return
+{
+	["typeOfProduct"] = 1,
+	["arrangeWindows"] = false,
+	["kilnPasses"] = 2,
+}

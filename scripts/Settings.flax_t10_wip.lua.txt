@@ -1,0 +1,18 @@
+return
+{
+	["clearUI"] = false,
+	["disableRip"] = false,
+	["seeds_per_pass"] = 2,
+	["rot_flax"] = true,
+	["seedAndWeed"] = true,
+	["water_locationY"] = -3600,
+	["grid_w"] = 4,
+	["water_locationX"] = 866,
+	["extraGridSpacing"] = false,
+	["grid_h"] = 5,
+	["water_needed"] = true,
+	["seedType"] = "Old",
+	["is_plant"] = false,
+	["readClock"] = true,
+	["num_loops"] = 50,
+}

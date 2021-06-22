@@ -13,7 +13,7 @@ function findCoords()
   if anchor then
     local lines = findAllText(nil, clockRegion);
     for i=1,#lines do
-      --lsPrintln("LINE " .. i .. " : " .. table.concat(lines[i], ","));
+      lsPrintln("LINE " .. i .. " : " .. table.concat(lines[i], ","));
 	if i == 2 then
 	  str = lines[i];
 	end

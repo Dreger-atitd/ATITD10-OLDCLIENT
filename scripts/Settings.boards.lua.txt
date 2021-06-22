@@ -1,0 +1,7 @@
+return
+{
+	["runPlaneCircle"] = true,
+	["carpShop"] = false,
+	["arrangeWindows"] = false,
+	["unpinWindows"] = false,
+}

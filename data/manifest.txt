@@ -1,0 +1,241 @@
+Version 1
+ManifestFileEntry
+	filename carrot_config.txt
+	crc -1347263274
+	size 1202
+End
+ManifestFileEntry
+	filename config_thistle.txt
+	crc 1345004611
+	size 4105
+End
+ManifestFileEntry
+	filename data/charTemplate.txt
+	crc 925606221
+	size 10173
+End
+ManifestFileEntry
+	filename images/clay.png
+	crc -2101765205
+	size 908
+End
+ManifestFileEntry
+	filename images/dirt.png
+	crc 1546264778
+	size 851
+End
+ManifestFileEntry
+	filename images/endurance.png
+	crc 381409069
+	size 725
+End
+ManifestFileEntry
+	filename images/endurance2.png
+	crc -525844510
+	size 680
+End
+ManifestFileEntry
+	filename images/endurance3.png
+	crc 1322809645
+	size 683
+End
+ManifestFileEntry
+	filename images/grass.png
+	crc 831304481
+	size 323
+End
+ManifestFileEntry
+	filename images/limestone.png
+	crc 1922366793
+	size 477
+End
+ManifestFileEntry
+	filename images/ok.png
+	crc -1134093713
+	size 951
+End
+ManifestFileEntry
+	filename images/slate.png
+	crc -2068499155
+	size 994
+End
+ManifestFileEntry
+	filename scripts/.luacheckrc
+	crc -705917854
+	size 5413
+End
+ManifestFileEntry
+	filename scripts/autorun.lua
+	crc 48184132
+	size 2217
+End
+ManifestFileEntry
+	filename scripts/color_finder.lua
+	crc 1356824048
+	size 1361
+End
+ManifestFileEntry
+	filename scripts/common.inc
+	crc -366252926
+	size 4070
+End
+ManifestFileEntry
+	filename scripts/common_click.inc
+	crc -518072464
+	size 16729
+End
+ManifestFileEntry
+	filename scripts/common_find.inc
+	crc -1830969515
+	size 17004
+End
+ManifestFileEntry
+	filename scripts/common_fix.inc
+	crc 1868750873
+	size 3795
+End
+ManifestFileEntry
+	filename scripts/common_gps.inc
+	crc 463508751
+	size 20718
+End
+ManifestFileEntry
+	filename scripts/common_text.inc
+	crc 632494485
+	size 6770
+End
+ManifestFileEntry
+	filename scripts/common_ui.inc
+	crc 139936408
+	size 16805
+End
+ManifestFileEntry
+	filename scripts/common_wait.inc
+	crc -1022314444
+	size 17365
+End
+ManifestFileEntry
+	filename scripts/common_window.inc
+	crc -804875267
+	size 19559
+End
+ManifestFileEntry
+	filename scripts/constants.inc
+	crc -1045296295
+	size 9774
+End
+ManifestFileEntry
+	filename scripts/default_routes.inc
+	crc -1377637947
+	size 15029
+End
+ManifestFileEntry
+	filename scripts/fishing_func.inc
+	crc -252630927
+	size 2230
+End
+ManifestFileEntry
+	filename scripts/flax_common.inc
+	crc 874955809
+	size 8290
+End
+ManifestFileEntry
+	filename scripts/gather_resources.lua
+	crc 1599529937
+	size 11755
+End
+ManifestFileEntry
+	filename scripts/paint_common.inc
+	crc -847008866
+	size 5033
+End
+ManifestFileEntry
+	filename scripts/screen_reader_common.inc
+	crc -2079232065
+	size 4037
+End
+ManifestFileEntry
+	filename scripts/serialize.inc
+	crc -1426535992
+	size 1755
+End
+ManifestFileEntry
+	filename scripts/settings.inc
+	crc -1862864237
+	size 955
+End
+ManifestFileEntry
+	filename scripts/test_find_coords.lua
+	crc 2070383704
+	size 4578
+End
+ManifestFileEntry
+	filename scripts/test_find_image_offset.lua
+	crc 1405698813
+	size 5886
+End
+ManifestFileEntry
+	filename scripts/test_ocr_clock.lua
+	crc 1736622698
+	size 1807
+End
+ManifestFileEntry
+	filename scripts/test_ocr_clock_lag_check.lua
+	crc 1780798671
+	size 4936
+End
+ManifestFileEntry
+	filename scripts/test_ocr_clock_text.lua
+	crc 259751893
+	size 4595
+End
+ManifestFileEntry
+	filename scripts/test_ocr_data.lua
+	crc 1239795670
+	size 1675
+End
+ManifestFileEntry
+	filename scripts/test_ocr_main_chat.lua
+	crc 288485788
+	size 2093
+End
+ManifestFileEntry
+	filename scripts/test_ocr_text.lua
+	crc -1421516725
+	size 4598
+End
+ManifestFileEntry
+	filename scripts/test_ocr_windows.lua
+	crc 1994240520
+	size 4089
+End
+ManifestFileEntry
+	filename scripts/train_ocr.lua
+	crc -783529748
+	size 3268
+End
+ManifestFileEntry
+	filename scripts/train_ocr_background.lua
+	crc -1841240807
+	size 2717
+End
+ManifestFileEntry
+	filename scripts/train_ocr_clock.lua
+	crc 239468777
+	size 2949
+End
+ManifestFileEntry
+	filename scripts/ui_utils.inc
+	crc 496372912
+	size 5028
+End
+ManifestFileEntry
+	filename sounds/error.wav
+	crc -303337823
+	size 51632
+End
+ManifestFileEntry
+	filename ThistlesReference.txt
+	crc 889058293
+	size 11186
+End
