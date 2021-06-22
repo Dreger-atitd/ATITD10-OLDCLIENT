@@ -1,9 +1,9 @@
 return
 {
-	["jug"] = true,
-	["potteryPasses"] = 1,
-	["cookpot"] = false,
-	["unpinWindows"] = false,
-	["arrangeWindows"] = false,
 	["mortar"] = false,
+	["jug"] = true,
+	["potteryPasses"] = 2,
+	["arrangeWindows"] = false,
+	["unpinWindows"] = false,
+	["cookpot"] = false,
 }

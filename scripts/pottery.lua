@@ -29,14 +29,14 @@ function start()
 		-- refresh windows
 		srReadScreen();
 		this = findAllImages("ThisIs.png");
-                if true then return; end;
+                
 		checkBreak();
 		for i=1,#this do
 			safeClick(this[i][0], this[i][1]);
 			lsSleep(75);
 			if jug then
 				srReadScreen();
-				local wetJug = findAllText("Jug"); --findAllImages("pottery/mouldJug.png")
+				local wetJug = findAllImages("pottery/mouldJug.png")
                                 lsPrintln(inspectit.inspect(wetJug));
 					for i=#wetJug, 1, -1 do
 						safeClick(wetJug[i][0], wetJug[i][1]);
@@ -44,14 +44,14 @@ function start()
 					end
 	    elseif mortar then
 				srReadScreen();
-				local clayMortar = findAllText("Clay Mortar"); --findAllImages("pottery/mouldMortar.png")
+				local clayMortar = findAllImages("pottery/mouldMortar.png")
 					for i=#clayMortar, 1, -1 do
 						safeClick(clayMortar[i][0], clayMortar[i][1]);
 						lsSleep(75);
 					end
 			elseif cookpot then
 				srReadScreen();
-				local clayCookpot = findAllText("Cookpot"); --findAllImages("pottery/mouldCookpot.png")
+				local clayCookpot = findAllImages("pottery/mouldCookpot.png")
 					for i=#clayCookpot, 1, -1 do
 						safeClick(clayCookpot[i][0], clayCookpot[i][1]);
 					end
@@ -189,7 +189,7 @@ function closePopUp()
     local ok = srFindImage("OK.png")
     if ok then
       statusScreen("Found and Closing Popups ...", nil, 0.7);
-      srClickMouseNoMove(ok[0]+5,ok[1],1);
+      srClickMouseNoMove(ok[0]+5,ok[1]);
       lsSleep(100);
     else
       break;
