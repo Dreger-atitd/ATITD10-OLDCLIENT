@@ -5,7 +5,7 @@ See [the Automato repo](https://github.com/DashingStrike/Automato) for additiona
 
 Join the [Automato Discord](https://discord.gg/XVUdwy8) to interact with other scripters.
 
-Having an issue with an ATITD script or need assistance?  If you have a GitHub account, create a new issue on the [Issues tab](https://github.com/DashingStrike/Automato-ATITD10/issues).
+Having an issue with an ATITD script or need assistance?  If you have a GitHub account, create a new issue on the [Issues tab](https://github.com/DashingStrike/Automato-ATITD10-OLDCLIENT/issues).
 
 Attribution
 -----------
