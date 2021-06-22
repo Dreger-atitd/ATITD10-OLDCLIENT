@@ -1,0 +1,13 @@
+return
+{
+	["slate"] = false,
+	["wood"] = false,
+	["route"] = 1,
+	["clay"] = false,
+	["grass"] = false,
+	["papy"] = false,
+	["lime"] = false,
+	["stayWaterfull"] = false,
+	["repeatForever"] = false,
+	["silt"] = false,
+}
