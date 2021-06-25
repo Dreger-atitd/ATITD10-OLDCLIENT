@@ -134,10 +134,10 @@ function getChatWindowBorders(sourceX, sourceY)
     bounds[1] = tlWinCorner[1]+tlcHeight-(tlcHeight * .5);
     bounds[3] = brWinCorner[1]+brcHeight-(brcHeight * .5);
     local region = {};
-          region = { [0] = borders[0], [1] = borders[1], [2] = borders[2], [3] = borders[3], 
-                  x = borders[0], y = borders[1], right = borders[2], bottom = borders[3],
-                  top = borders[1], left = borders[0], width = borders[2] - borders[0],
-                  height = borders[3] - borders[1] };
+          region = { [0] = bounds[0], [1] = bounds[1], [2] = bounds[2], [3] = bounds[3], 
+                  x = bounds[0], y = bounds[1], right = bounds[2], bottom = bounds[3],
+                  top = bounds[1], left = bounds[0], width = bounds[2] - bounds[0],
+                  height = bounds[3] - bounds[1] };
     lsPrintln(inspectit.inspect(region));
     return region;
 end
@@ -160,7 +160,7 @@ function newGetWindowBorders(sourceX, sourceY)
     local firstY = sourceY - brcHeight;
     if firstX < 0 then firstX = 0; end;
     if firstY < 0 then firstY = 0; end;
-    imagesInRange = findAllImagesInRange("BRWindowCorner.png", firstX, firstY, screen[0]-firstX, screen[1]-firstY, 100);
+    imagesInRange = findAllImagesInRange("BRWindowCorner.png", firstX, firstY, screen[0]-firstX, screen[1]-firstY, 600);
 
     if not imagesInRange then return nil; end;
     --lsPrintln("Images in range #1");
@@ -177,7 +177,7 @@ function newGetWindowBorders(sourceX, sourceY)
     --lsPrintln("Past not BRCorner2");
     --lsPrintln(inspectit.inspect(brWinCorner));
     nearestDistance = 999999999;
-    local imagesInRange = findAllImagesInRange("TLWindowCorner.png", 0, 0, brWinCorner[0]+brcWidth, brWinCorner[1]+brcHeight, 100);
+    local imagesInRange = findAllImagesInRange("TLWindowCorner.png", 0, 0, brWinCorner[0]+brcWidth, brWinCorner[1]+brcHeight, 600);
     if not imagesInRange then return false; end;
     --lsPrintln("Images in range #2");
     for i = 1, #imagesInRange do
@@ -208,7 +208,7 @@ function newGetWindowBorders(sourceX, sourceY)
                   x = bounds[0], y = bounds[1], right = bounds[2], bottom = bounds[3],
                   top = bounds[1], left = bounds[0], width = bounds[2] - bounds[0],
                   height = bounds[3] - bounds[1] };
-    lsPrintln(inspectit.inspect(region));
+    --lsPrintln(inspectit.inspect(region));
 
     return region;
 end
@@ -396,8 +396,8 @@ end
 
 function arrangeStashed(cascade, waterGap, varWidth, varHeight, sizeRight, offsetWidth, offsetHeight)
   local screen = srGetWindowSize();
-  local bottomRightX = screen[0] - 400;
-  local bottomRightY = screen[1] - 200;
+  local bottomRightX = screen[0] - 401;
+  local bottomRightY = screen[1] - 301;
   local cascadepl = "true";
   local waterGappl = "true"
   if not cascade then cascadepl = "false"; end
@@ -423,74 +423,89 @@ function arrangeStashed(cascade, waterGap, varWidth, varHeight, sizeRight, offse
   local counter = 0;
   
   srReadScreen();
-  local window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 200); --srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY);
+  local window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 300, 7000); --srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY);
   while window and (window[0] > lastX or window[1] > lastY) do
     counter = counter + 1
     safeClick(window[0], window[1]);
-    lsSleep(click_delay);
+    lsSleep(80);
     srReadScreen();
-    window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 200);
-    local bounds = newGetWindowBorders(window[0], window[1]);
-    local width, height;
-    if not varWidth then
-      width = bounds[2] - bounds[0] + 7; -- The +7 offset is due to bigger borders in T9. Prevent touching/overlapping.
+    local bounds = nil;
+    local freshWindow = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 300, 7000);
+    if freshWindow then
+        bounds = newGetWindowBorders(freshWindow[0], freshWindow[1]);
+        if not bounds then
+            bounds = newGetWindowBorders(window[0], window[1]);
+        end
     else
-      width = varWidth;
+        bounds = newGetWindowBorders(window[0], window[1]);
     end
-    if not varHeight then
-      height = bounds[3] - bounds[1] + 14; -- The +14 offset is due to bigger borders in T9. Prevent touching/overlapping.
-    else
-      height = varHeight;
-    end
-    if offsetWidth then
-     width = width + offsetWidth;
-    end
-    if offsetHeight then
-     height = height + offsetHeight;
-    end
-
-    if cascade then
-      if currentY + height >= screen[1] then
-        currentX = currentX + xMax;
-        currentY = 0;
-        xMax = 0;
+    if bounds then
+      local width, height;
+      if not varWidth then
+        width = bounds[2] - bounds[0] + 7; -- The +7 offset is due to bigger borders in T9. Prevent touching/overlapping.
+      else
+        width = varWidth;
       end
-      if currentX + width >= screen[0] then
-        error("Cannot arrange these windows into a cascade.");
+      if not varHeight then
+        height = bounds[3] - bounds[1] + 14; -- The +14 offset is due to bigger borders in T9. Prevent touching/overlapping.
+      else
+        height = varHeight;
       end
-    else
-      if currentX + width >= screen[0] then
-        currentX = 0;
-        currentY = currentY + yMax;
-        yMax = 0;
+      if offsetWidth then
+       width = width + offsetWidth;
       end
-      if currentY + height >= screen[1] then
-        error("Cannot arrange these windows into a grid.");
-      end
-    end
-    lastX = window[0] - bounds[0] + currentX;
-    lastY = window[1] - bounds[1] + currentY;
-    safeDrag(window[0], window[1], lastX, lastY);
-    if cascade then
-      currentX = currentX + 8;
-      currentY = currentY + 25;
-
-      -- This fixes a bug and I'm not sure why it does this.
-      -- The 2nd window on a cascade paritally covers This Is on first window. Left border is touching on Window 1 and 2.
-      if counter == 1 then
-        currentX = currentX + 4 -- Add an additional 4 on currentX and Y on 2nd window
-        currentY = currentY + 4
+      if offsetHeight then
+       height = height + offsetHeight;
       end
 
+      if cascade then
+        if currentY + height >= screen[1] then
+          currentX = currentX + xMax;
+          currentY = 0;
+          xMax = 0;
+        end
+        if currentX + width >= screen[0] then
+          error("Cannot arrange these windows into a cascade.");
+        end
+      else
+        if currentX + width >= screen[0] then
+          currentX = 0;
+          currentY = currentY + yMax;
+          yMax = 0;
+        end
+        if currentY + height >= screen[1] then
+          error("Cannot arrange these windows into a grid.");
+        end
+      end
+      lastX = window[0] - bounds[0] + currentX;
+      lastY = window[1] - bounds[1] + currentY;
+      safeDrag(window[0], window[1], lastX, lastY);
+      if cascade then
+        currentX = currentX + 8;
+        currentY = currentY + 25;
+
+        -- This fixes a bug and I'm not sure why it does this.
+        -- The 2nd window on a cascade paritally covers This Is on first window. Left border is touching on Window 1 and 2.
+        if counter == 1 then
+          currentX = currentX + 4 -- Add an additional 4 on currentX and Y on 2nd window
+          currentY = currentY + 4
+        end
+
+      else
+        currentX = currentX + width + 5;
+      end
+      xMax = math.max(xMax, width);
+      yMax = math.max(yMax, height);
+      lsSleep(tick_delay);
+      srReadScreen();
+      window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 300, 7000);
+      statusScreen("Arranging Windows " .. counter);
     else
-      currentX = currentX + width + 5;
+      lsSleep(tick_delay);
+      srReadScreen();
+      window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 300, 7000);
+      statusScreen("Arranging Windows " .. counter);
     end
-    xMax = math.max(xMax, width);
-    yMax = math.max(yMax, height);
-    lsSleep(tick_delay);
-    srReadScreen();
-    window = srFindImageInRange("ThisIs.png", bottomRightX, bottomRightY,  400, 200);
-    statusScreen("Arranging Windows " .. counter);
   end
 end
 

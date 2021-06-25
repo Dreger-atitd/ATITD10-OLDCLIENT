@@ -9,11 +9,36 @@ brickList = {"Bricks", "Firebricks"};
 rackList = {};
 brickType = "b";
 brick = 1;
+useLastLayout = nil;
+layoutFileName = "brickLayout.txt";
+savedLayout = {};
+sleepTime = 50000;
+
+
+function saveLayout()
+    serialize(savedLayout, layoutFileName);
+    loadLayout();
+end
+function loadLayout()
+    savedLayout = {};
+    local success = false;
+    if (pcall(dofile, layoutFileName)) then
+        success, savedLayout = deserialize(layoutFileName);
+    end
+    
+    return success;
+end
+
 function doit()
+  useLastLayout = loadLayout();
+  writeSetting("useLastLayout", useLastLayout);
   promptParameters();
   askForWindow("You know the routine, hit SHIFT over the ATiTD window.");
-
-  getBrickLocations();
+  if not useLastLayout then
+      getBrickLocations();
+  else
+      rackList = savedLayout;
+  end;
   while (true) do
     checkBreak();
     for i = 1, #rackList do
@@ -28,8 +53,9 @@ function doit()
       doBrick(rackList[i][1], rackList[i][2], brickType);
       checkBreak();
     end
+    
     sleepWithStatus(
-        50000,
+        sleepTime,
         "Waiting for next round",
         nil,
         0.7
@@ -53,14 +79,37 @@ function promptParameters()
 
     lsSetCamera(0,0,lsScreenX*scale,lsScreenY*scale);
 
+    brick = readSetting("brick", brick);
     lsPrint(10, y, 0, scale, scale, 0xd0d0d0ff, "Brick type:");
     brick = lsDropdown("brick", 120, y, 0, 180, brick, brickList);
-
+    writeSetting("brick", brick);
     if brick == 1 then
         brickType = "b"
     elseif brick == 2 then
         brickType = "f"
     end
+    y = y + 32;
+
+    useLastLayout = readSetting("useLastLayout", useLastLayout);
+    useLastLayout = lsCheckBox(10, y, z, 0xFFFFFFff, " Use last layout.", useLastLayout);
+    writeSetting("useLastLayout", useLastLayout);
+    y = y + 32
+
+    lsPrint(15, y, 0, 0.8, 0.8, 0xffffffff, "Sleep time::");
+    y = y + 22;
+
+    sleepTime = readSetting("sleepTime",sleepTime);
+    local dontCare = nil;
+    dontCare, sleepTime = lsEditBox("sleepTime", 15, y, 0, 200, 30, 1.0, 1.0, 0x000000ff, sleepTime);
+    sleepTime = tonumber(sleepTime);
+    if not sleepTime then
+        lsPrint(75, y+6, 10, 0.7, 0.7, 0xFF2020ff, "MUST BE A NUMBER");
+        sleepTime = 50000;
+    end
+    writeSetting("sleepTime",sleepTime);
+    y = y + 32
+
+    
 
 
     if lsButtonText(10, (lsScreenY - 30) * scale, z, 100, 0xFFFFFFff, "OK") then
@@ -164,4 +213,6 @@ function getBrickLocations()
         lsDoFrame();
         lsSleep(10);
     end
+    savedLayout = rackList;
+    saveLayout();
 end

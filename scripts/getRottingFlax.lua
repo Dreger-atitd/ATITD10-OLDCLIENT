@@ -23,20 +23,25 @@ end
 ESC_KEY = "\27"
 
 function getRotten()
+    lsSleep(75);
+    checkBreak();
     srReadScreen();
-    local rotten = findImage("rottingFlax.png");
+    local rotten = srFindImageInRange("rottingFlax.png", 0, 80, srGetWindowSize()[0], srGetWindowSize()[1] - 80, 3000);
+    if not rotten then
+        return;
+    end
     if rotten then
-        srSetMousePos(screenCenter[0], screenCenter[1]);
-        safeClick(rotten[0] + 5, rotten[1] + 3);
+        srSetMousePos(screenCenter[1], screenCenter[2]);
+        srClickMouseNoMove(rotten[0] + 5, rotten[1] + 5);
         lsSleep(75);
-        checkBreak();
+        
         srReadScreen();
-        local getRotten = findImage("getRotten.png");
+        local getRotten = srFindImage("getRotten.png",4000);
         if getRotten then
-            safeClick(getRotten[0] + 5, getRotten[1] + 3);
+            srClickMouseNoMove(getRotten[0] + 3, getRotten[1] + 3);
         else
             srKeyEvent(ESC_KEY);
-            scriptCompleted = true;
+            --scriptCompleted = true;
         end
      else
          scriptCompleted = true;

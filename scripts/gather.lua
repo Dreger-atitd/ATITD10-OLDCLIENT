@@ -1013,8 +1013,9 @@ function followRoute(route)
                 srReadScreen()
                 noWoodMenuPos = srFindImage("noWood.png") --findText("no Wood");
                 if (noWoodMenuPos) then
-                    safeClick(noWoodMenuPos[0], noWoodMenuPos[1] - 20)
+                    srKeyEvent("\27") --safeClick(noWoodMenuPos[0], noWoodMenuPos[1] - 20)
                     lsSleep(75)
+                    
                 else
                     --utilityPos = findText("Utility");
                     --if(utilityPos) then
@@ -1060,7 +1061,9 @@ function followRoute(route)
                 walkingRoute = false
                 return
             end
+          --lsPrintln("not reverse end of route");
         end
+        --lsPrintln("not reverse end");
       else
         curr = curr - 1;
         if (curr < 1) then
@@ -1074,7 +1077,9 @@ function followRoute(route)
                 return;
           end
         end
+        --lsPrintln("reverse end");
       end
+      --lsPrintln("while end");
     end
     routeStartTime = 0
     walkingRoute = false
@@ -1225,7 +1230,7 @@ function clickWaypointPixel(x, y, typeOfWaypoint)
             safeClick(x, y)
             lsSleep(150)
             srReadScreen()
-            local pos = findText("Bonfire")
+            local pos = srFindImage("bonfire.png"); --findText("Bonfire")
             if (not pos) then
                 lsPrintln("Looking for " .. WaypointTypes[typeOfWaypoint] .. " but clicking didn't bring up a menu.")
                 return false
@@ -1351,13 +1356,13 @@ function clickWaypointPixel(x, y, typeOfWaypoint)
         safeClick(x, y)
         lsSleep(150)
         srReadScreen()
-        pos = findText("Examine this")
+        pos = srFindImage("examine.png"); --findText("Examine this")
         if (pos) then
             safeClick(x - 5, y)
             lsPrintln("Found a plant, but didn't want that.")
             return false
         end
-        pos = findText("This is")
+        pos = nil --findText("This is") -- not good with warehouse pinned..
         if (pos) then
             safeClick(x - 5, y)
             lsPrintln("Found something other than " .. WaypointTypes[typeOfWaypoint])
@@ -1826,7 +1831,7 @@ end
 function stashWood()
     lsSleep(250)
     srReadScreen()
-    addWoodPos = findText("Add some Wood")
+    addWoodPos = srFindImage("addSomeWood.png"); --findText("Add some Wood")
     if (addWoodPos) then
         safeClick(addWoodPos[0] + 10, addWoodPos[1] + 5)
         lsSleep(250)
@@ -1917,7 +1922,7 @@ function stashAllButWood()
                                             stashItem(pos, true)
                                             stashedSomething = true
                                         else
-                                            pos = findText("Silt (")
+                                            pos = srFindImage("invSilt.png") --findText("Silt (")
                                             if (pos) then
                                                 stashItem(pos, true)
                                                 stashedSomething = true
@@ -2035,7 +2040,7 @@ function prepareForWalking()
     setCameraView(CARTOGRAPHER2CAM)
 end
 
-function zoomIn()
+function zoomIn() -- not used.
     srReadScreen()
     local pos = findText("Year")
     if (not pos) then

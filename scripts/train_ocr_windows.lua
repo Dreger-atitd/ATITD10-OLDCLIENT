@@ -164,6 +164,7 @@ function findStuff()
     --lsPrintln(inspectit.inspect(textRegions));
     for i = 1, #textRegions do
       lsPrint(textRegions[i][0]+280, textRegions[i][1]+400, 1, .81, .81, 0xFF8080ff, textRegions[i][2])
+      lsPrintln("text found: " .. textRegions[i][2]);
     end
     --local current = regions[windowIndex];
     --srStripRegion(current[0], current[1], current[2], current[3]);

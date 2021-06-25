@@ -28,7 +28,8 @@ function doitRake(oneCycle)
         clickAllOK();
         clickAllImages("deadPinned.png");
         clickAllImages("ThisIs.png");
-        if not (srFindImage("flaxComb.png") or false) then -- make sure comb or rake is available.
+        if not (srFindImage("flaxComb.png") or srFindImage("hacklingRake.png")) then -- make sure comb or rake is available.
+            lsPrintln("No comb or rake available!");
             return nil;
         end
 	checkCurrentStep(); -- Verify what step we're on when you start macro and update.
@@ -78,7 +79,7 @@ function doitRake(oneCycle)
 			task = "refineLint.png";
 			task_text = "Refine the Lint";
 		elseif rakeStep == 4 then
-			task = "cleanTheFlax.png";
+			task = "cleanThe.png";
 			task_text = "Clean the Rake";
 		end
 		
@@ -159,6 +160,9 @@ function checkCurrentStep()
   local taskStep2 = srFindImage("seperateTow.png",7000); --findText("Separate Tow");
   local taskStep3 = srFindImage("refineLint.png",7000); --findText("Refine the Lint");
   local taskStep4 = srFindImage("cleanTheFlax.png",7000);  --findText("");
+  if not taskStep4 then
+      taskStep4 = srFindImage("cleanTheHackling.png",7000);
+  end
   local taskStep5 = srFindImage("repair.png",7000); --findText("Repair");
   if taskStep1 then
     rakeStep = 1;

@@ -13,7 +13,7 @@ function findCoords()
   if anchor then
     local lines = findAllText(nil, clockRegion);
     for i=1,#lines do
-      lsPrintln("LINE " .. i .. " : " .. table.concat(lines[i], ","));
+      --lsPrintln("LINE " .. i .. " : " .. table.concat(lines[i], ","));
 	if i == 2 then
 	  str = lines[i];
 	end
@@ -23,8 +23,8 @@ function findCoords()
 	  str = str[2];
 	  str = string.gsub(str, " 1", "1");
 	  str = string.gsub(str, "1 ", "1");
-
-
+          str = string.gsub(str, "%.", ""); -- Sometimes commas get detected as periods.
+          --lsPrintln("gps: " .. str);
 	  -- Misc Exceptions we want to strip
 	  str = string.gsub(str, "0::#", ":"); -- Giza Exception
 	  str = string.gsub(str, "#t#", ":"); -- Napata Exception occurs at minimum: 0, -6327
@@ -51,12 +51,13 @@ function findCoords()
 
 	  str = string.gsub(str, "  ", ","); -- Catch double space between numbers
 	  str = string.gsub(str, " ", ",");  -- Catch single space between numbers
+          
 	  local coords = explode(",", str);
-
-	    for i=1,#coords do
+          --lsPrintln("coords: ".. inspectit.inspect(coords));
+	  --for i=1,#coords do
             x = tonumber(coords[1])
             y = tonumber(coords[2])
-          end
+          --end
 
 
 --  One more check to ensure x and y have values. If they're nil, exit with a friendlier message than.
@@ -64,6 +65,7 @@ function findCoords()
     if x == nil or y == nil then
       error("Could not find coordinates from the clock.\nIs the /clockloc visible or partially covered?");
     end
+    
     result = makePoint(tonumber(x), tonumber(y));
     if not result[0] or not result[1] then
       result = nil;

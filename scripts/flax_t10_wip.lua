@@ -513,7 +513,7 @@ function doit()
     if not flaxHomePosition then
       error("ATITD clock not found. Try unchecking Read Clock option if problem persists")
     end
-    lsPrintln("Start pos:" .. flaxHomePosition[0] .. ", " .. flaxHomePosition[1])
+    --lsPrintln("Start pos:" .. flaxHomePosition[0] .. ", " .. flaxHomePosition[1])
   else
     if not seedAndWeed then
       rot_flax = false;
@@ -527,19 +527,19 @@ function doit()
   finish_up = nil;
   
   if seedAndWeed then
-    lsPrintln("in seedAndWeed");
+    --lsPrintln("in seedAndWeed");
     quit = false;
     while not (finish_up == 1) do
-      lsPrintln("in seedAndWeed while");
+      --lsPrintln("in seedAndWeed while");
       if not is_plant then
-        lsPrintln("in seedAndWeed while not is_plant");
+        --lsPrintln("in seedAndWeed while not is_plant");
         num_loops = 1; --seeds_per_pass;
         done = false;
         quit = false;
         doCycle(1);
         is_plant = true;
       else
-        lsPrintln("in seedAndWeed while is_plant");
+        --lsPrintln("in seedAndWeed while is_plant");
         num_loops = (seeds_per_pass * seeds_per_harvest) - 1;
         done = false;
         quit = false;
@@ -1005,7 +1005,7 @@ end
 
 function walkHome()
   if readClock then
-    lsPrintln("Start pos:" .. flaxHomePosition[0] .. ", " .. flaxHomePosition[1])
+    --lsPrintln("Start pos:" .. flaxHomePosition[0] .. ", " .. flaxHomePosition[1])
     walkTo(flaxHomePosition)
   end
 end

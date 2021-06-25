@@ -206,11 +206,13 @@ function findAllText(text, window, flag, sizemod)
   if regex and exact then
     error("Cannot use both REGEX and EXACT flags");
   end
-
+  local specificWindow = nil;
   local results = {};
   local windowList = {window};
   if not window then
     windowList = findAllWindows();
+  else
+    specificWindow = true;
   end
 
   for i=1,#windowList do
@@ -567,7 +569,7 @@ function findClockRegion()
 
   elseif hyksos then
     faction = "Hyksos";
-    --srSetWindowInvertColorRange(0x6B660C, 0xDCDBC2);
+    srSetWindowInvertColorRange(0x6B660C, 0xDCDBC2);
     clockUpperLeftX = hyksos[0];
     clockUpperLeftY = hyksos[1];
 
